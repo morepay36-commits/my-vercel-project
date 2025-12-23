@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Vercel Project</title>
+  <title>My Wallet App</title>
 </head>
 <body>
-  <h1>Hello Vercel 🚀</h1>
+
+<h2>Connect My Wallet</h2>
+<button onclick="connectWallet()">Connect Wallet</button>
+
+<p id="status"></p>
+<p id="address"></p>
+
+<script>
+async function connectWallet() {
+  if (!window.ethereum) {
+    alert("Wallet not found. Use MetaMask or Trust Wallet browser.");
+    return;
+  }
+
+  try {
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts"
+    });
+
+    document.getElementById("status").innerText = "Connected ✅";
+    document.getElementById("address").innerText =
+      "Wallet Address: " + accounts[0];
+
+  } catch (err) {
+    alert("Connection rejected");
+  }
+}
+</script>
+
 </body>
 </html>
