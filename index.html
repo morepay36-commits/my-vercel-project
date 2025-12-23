@@ -1,50 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Send USDT</title>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <title>Wallet Connect</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.min.js"></script>
 </head>
 <body>
 
-<h2>Send USDT</h2>
-
-<input id="to" placeholder="Receiver Address" style="width:350px"><br><br>
-<input id="amount" placeholder="USDT Amount"><br><br>
-
-<button onclick="sendUSDT()">Send</button>
-
-<p id="status"></p>
+<h2>Connect Wallet</h2>
+<button onclick="connectWallet()">Connect Wallet</button>
+<p id="wallet"></p>
 
 <script>
-const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955"; // BSC USDT
-const USDT_ABI = [
-  "function transfer(address to, uint amount) returns (bool)",
-  "function decimals() view returns (uint8)"
-];
-
-async function sendUSDT() {
-  if (!window.ethereum) {
-    alert("Wallet not found");
-    return;
+async function connectWallet() {
+  if (window.ethereum) {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const accounts = await provider.send("eth_requestAccounts", []);
+    document.getElementById("wallet").innerText =
+      "Connected: " + accounts[0];
+  } else {
+    alert("Install MetaMask or Trust Wallet");
   }
-
-  const to = document.getElementById("to").value;
-  const amount = document.getElementById("amount").value;
-
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  const signer = provider.getSigner();
-
-  const usdt = new ethers.Contract(USDT_ADDRESS, USDT_ABI, signer);
-  const decimals = await usdt.decimals();
-  const value = ethers.utils.parseUnits(amount, decimals);
-
-  document.getElementById("status").innerText = "Confirm in wallet...";
-
-  const tx = await usdt.transfer(to, value);
-  await tx.wait();
-
-  document.getElementById("status").innerText = "Sent successfully ✅";
 }
 </script>
 
